@@ -2,30 +2,18 @@
 
 A modern TypeScript template for rapid development with best practices built-in.
 
-## Stack
-
-- **Runtime**: Bun
-  - https://bun.com/docs
-- **Language**: TypeScript 5+ with strict mode
-  - https://www.typescriptlang.org/docs/handbook/
-  - https://www.totaltypescript.com/ts-reset
-  - https://github.com/microsoft/typescript-go
-- **Validation**: ArkType for runtime type safety
-  - https://arktype.io/docs/intro/your-first-type
-- **Config**: arkenv for type-safe environment variables
-  - https://arkenv.js.org/docs/arkenv
-- **Linting**: Biome for fast linting and formatting
-  - https://biomejs.dev/guides/getting-started/
-- **Testing**: Bun's built-in test runner
-  - https://bun.com/docs/test
-- **Versioning**: Changesets for release management
-  - https://github.com/changesets/changesets
-- **Commit Hooks**: Husky
-  - https://typicode.github.io/husky/how-to.html
-
 ## Quick Start
 
 ```bash
+# Initialize a new project (interactive mode)
+bun run init
+
+# Initialize a new project with defaults
+bun run init --yes
+
+# Initialize a new project with specific template
+bun run init --template api --yes
+
 # Install dependencies
 bun install
 
@@ -127,3 +115,24 @@ bun run version-packages
 # Publish release
 bun run release
 ```
+
+## Stack
+
+- **Runtime**: Bun
+  - https://bun.com/docs
+- **Language**: TypeScript 5+ with strict mode
+  - https://www.typescriptlang.org/docs/handbook/
+  - https://www.totaltypescript.com/ts-reset
+  - https://github.com/microsoft/typescript-go
+- **Validation**: ArkType for runtime type safety
+  - https://arktype.io/docs/intro/your-first-type
+- **Config**: arkenv for type-safe environment variables
+  - https://arkenv.js.org/docs/arkenv
+- **Linting**: Biome for fast linting and formatting
+  - https://biomejs.dev/guides/getting-started/
+- **Testing**: Bun's built-in test runner
+  - https://bun.com/docs/test
+- **Versioning**: Changesets for release management
+  - https://github.com/changesets/changesets
+- **Commit Hooks**: Husky
+  - https://typicode.github.io/husky/how-to.html
