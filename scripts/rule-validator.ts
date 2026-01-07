@@ -34,7 +34,7 @@ const RULES: Rule[] = [
 		severity: "error",
 	},
 	{
-		name: "template-literals-only",
+		name: "template-literals-only-code",
 		pattern: /"\s*\+\s*[^"]|\+\s*"[^"]*"/g,
 		message: `TEMPLATE LITERALS ONLY: Use \${} not +`,
 		severity: "error",
