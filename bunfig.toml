@@ -1,14 +1,9 @@
 [test]
-
-# Skip test files from coverage
 coverageSkipTestFiles = true
-
-# Exclude generated code and templates from coverage
 coveragePathIgnorePatterns = [
   "**/*.test.ts",
   "**/*.spec.ts",
-  "templates/**",
+  "scripts/**",
   "node_modules/**",
   "dist/**",
-  "*.config.ts"
 ]

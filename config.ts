@@ -4,14 +4,14 @@
 import arkenv from "arkenv";
 
 export const env = arkenv({
-	NODE_ENV: "'development' | 'production' | 'test' = 'development'",
+  NODE_ENV: "'development' | 'production' | 'test' = 'development'",
 });
 
 export const CONFIG = {
-	nodeEnv: env.NODE_ENV,
-	isDevelopment: env.NODE_ENV === "development",
-	isProduction: env.NODE_ENV === "production",
-	isTest: env.NODE_ENV === "test",
+  nodeEnv: env.NODE_ENV,
+  isDevelopment: env.NODE_ENV === "development",
+  isProduction: env.NODE_ENV === "production",
+  isTest: env.NODE_ENV === "test",
 } as const;
 
 export type Config = typeof CONFIG;
