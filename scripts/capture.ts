@@ -17,8 +17,10 @@ export async function capture(
     stderr: "pipe",
     env: { ...process.env, ...options.env },
   });
-  const stdout = await readStream(proc.stdout);
-  const stderr = await readStream(proc.stderr);
+  const [stdout, stderr] = await Promise.all([
+    readStream(proc.stdout),
+    readStream(proc.stderr),
+  ]);
   const exitCode = await proc.exited;
   return { exitCode: exitCode ?? 1, stdout, stderr };
 }

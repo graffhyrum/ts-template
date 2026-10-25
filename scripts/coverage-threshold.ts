@@ -4,24 +4,31 @@ import { capture, type Capture } from "./capture.ts";
 const FUNCTION_THRESHOLD = 100;
 const LINE_THRESHOLD = 100;
 
-const run = await capture(
-  ["bun", "test", "--coverage", "--coverage-reporter=lcov"],
-  {
-    env: { AGENT: "1" },
-  },
-);
-if (run.exitCode !== 0) reportTestFailure(run);
-
-const lcovFile = Bun.file("coverage/lcov.info");
-if (!(await lcovFile.exists())) {
-  process.stderr.write(
-    "coverage threshold failed: coverage/lcov.info is missing\n",
-  );
-  process.exit(1);
+if (import.meta.main) {
+  await main();
 }
 
-const failures = collectFailures(parseLcov(await lcovFile.text()));
-reportCoverage(failures);
+async function main(): Promise<void> {
+  const run = await capture(
+    ["bun", "test", "--coverage", "--coverage-reporter=lcov"],
+    {
+      env: { AGENT: "1" },
+    },
+  );
+  if (run.exitCode !== 0) reportTestFailure(run);
+
+  const lcovFile = Bun.file("coverage/lcov.info");
+  if (!(await lcovFile.exists())) {
+    process.stderr.write(
+      "coverage threshold failed: coverage/lcov.info is missing\n",
+    );
+    process.exit(1);
+  }
+
+  const records = parseLcov(await lcovFile.text());
+  const sources = await listEligibleSources();
+  reportCoverage(collectFailures(records, sources));
+}
 
 function reportTestFailure(run: Capture): never {
   if (run.stdout.length > 0) process.stdout.write(run.stdout);
@@ -36,11 +43,32 @@ function reportCoverage(failures: readonly string[]): void {
   process.exit(1);
 }
 
-function collectFailures(files: readonly FileCoverage[]): string[] {
-  const gated = files.filter((file) => isGatedFile(normalizePath(file.path)));
-  if (gated.length === 0)
-    return ["no src coverage records in coverage/lcov.info"];
-  return gated.flatMap(failureForFile);
+export function collectFailures(
+  files: readonly FileCoverage[],
+  sources: readonly string[],
+): string[] {
+  if (sources.length === 0) return ["no eligible source files"];
+  const missing = missingRecords(files, sources);
+  const low = files
+    .filter((file) => isGatedFile(normalizePath(file.path)))
+    .flatMap(failureForFile);
+  return [...missing, ...low];
+}
+
+function missingRecords(
+  files: readonly FileCoverage[],
+  sources: readonly string[],
+): string[] {
+  const covered = coveredPaths(files);
+  return sources.filter((source) => !covered.has(source)).map(missingMessage);
+}
+
+function coveredPaths(files: readonly FileCoverage[]): ReadonlySet<string> {
+  return new Set(files.map((file) => normalizePath(file.path)));
+}
+
+function missingMessage(source: string): string {
+  return `${source}: no coverage record`;
 }
 
 function failureForFile(file: FileCoverage): string[] {
@@ -51,6 +79,18 @@ function failureForFile(file: FileCoverage): string[] {
   return [
     `${path}: ${functions.toFixed(1)}% functions (threshold ${FUNCTION_THRESHOLD}%), ${lines.toFixed(1)}% lines (threshold ${LINE_THRESHOLD}%)`,
   ];
+}
+
+async function listEligibleSources(): Promise<readonly string[]> {
+  const found: string[] = [];
+  const glob = new Bun.Glob("src/**/*.ts");
+  for await (const file of glob.scan(".")) {
+    const path = normalizePath(file);
+    if (!isGatedFile(path)) continue;
+    found.push(path);
+  }
+  if (await Bun.file("config.ts").exists()) found.push("config.ts");
+  return found;
 }
 
 type FileCoverage = {
@@ -97,8 +137,9 @@ function readField(record: string, prefix: string): string | undefined {
 function normalizePath(file: string): string {
   const slash = file.replaceAll("\\", "/");
   const cwd = `${process.cwd().replaceAll("\\", "/")}/`;
-  if (slash.startsWith(cwd)) return slash.slice(cwd.length);
-  return slash;
+  const relative = slash.startsWith(cwd) ? slash.slice(cwd.length) : slash;
+  if (relative.startsWith("./")) return relative.slice(2);
+  return relative;
 }
 
 function isGatedFile(file: string): boolean {

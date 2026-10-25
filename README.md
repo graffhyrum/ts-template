@@ -39,7 +39,7 @@ The sample coverage baseline is 100% functions and 100% lines for gated files. `
 | ----------------------- | -------------------------------------------- |
 | `bun run dev`           | Run `src/index.ts` with reload               |
 | `bun run build`         | Build for production                         |
-| `bun run start`         | Run the built file                           |
+| `bun run start`         | Run `src/index.ts`                           |
 | `bun run test`          | Run tests                                    |
 | `bun run test:coverage` | Run tests and enforce the coverage threshold |
 | `bun run typecheck`     | Type-check with `bun check`                  |
