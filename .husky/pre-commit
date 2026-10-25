@@ -1,1 +1,1 @@
-bun fastvet
+bun run vet

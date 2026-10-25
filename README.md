@@ -1,138 +1,97 @@
-# TypeScript Template
+# ts-template
 
-A modern TypeScript template for rapid development with best practices built-in.
+Personal TypeScript project template for Joshua Pendragon.
 
-## Quick Start
+Clone the repo. Install dependencies. Run the quality gate. Then add your code.
 
 ```bash
-# Initialize a new project (interactive mode)
-bun run init
-
-# Initialize a new project with defaults
-bun run init --yes
-
-# Initialize a new project with specific template
-bun run init --template api --yes
-
-# Install dependencies
 bun install
-
-# Start development server with hot reload
-bun run dev
-
-# Run full validation
 bun run vet
 ```
 
+Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
+
+`mutate4ts` is a later add-on. This template does not install it.
+
+## Quality gate
+
+`bun run vet` runs the steps below in order. It prints nothing when they pass. It prints the failing step only.
+
+| Step           | Command                                       |
+| -------------- | --------------------------------------------- |
+| fmt            | `bun fmt --check`                             |
+| typecheck      | `bun check`                                   |
+| lint           | `oxlint --type-aware`                         |
+| rule-validator | `@graff/rule-validator`                       |
+| stepdown       | `stepdown-rule`                               |
+| crap4ts        | coverage, then `@graffhyrum/crap4ts`          |
+| test           | `bun test` with the sample coverage threshold |
+
+`bun run fmt` writes format fixes. `bun run lint:fix` writes lint fixes.
+
+GitHub Actions runs `bun install --frozen-lockfile` and `bun run vet` on pull requests and on `main`.
+
+The sample coverage baseline is 100% functions and 100% lines for gated files. `scripts/coverage-threshold.ts` holds that threshold.
+
 ## Commands
 
-| Command                  | Description                                     |
-|--------------------------|-------------------------------------------------|
-| `bun run dev`            | Start development server with hot reload        |
-| `bun run build`          | Build for production                            |
-| `bun run start`          | Start production server                         |
-| `bun run test`           | Run all tests                                   |
-| `bun run test <pattern>` | Run specific tests                              |
-| `bun run test:e2e`       | Run e2e tests                                   |
-| `bun run typecheck`      | Type-check with TypeScript                      |
-| `bun run check`          | Lint with Biome                                 |
-| `bun run fix`            | Auto-fix linting issues                         |
-| `bun run fastvet`        | Run typecheck, lint fix, rule validation, tests |
-| `bun run vet`            | Full validation including e2e tests             |
+| Command                 | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `bun run dev`           | Run `src/index.ts` with reload               |
+| `bun run build`         | Build for production                         |
+| `bun run start`         | Run `src/index.ts`                           |
+| `bun run test`          | Run tests                                    |
+| `bun run test:coverage` | Run tests and enforce the coverage threshold |
+| `bun run typecheck`     | Type-check with `bun check`                  |
+| `bun run lint`          | Lint with oxlint (type-aware)                |
+| `bun run fmt`           | Format with `bun fmt`                        |
+| `bun run vet`           | Run the full quality gate                    |
 
-## Code Style
+The Husky pre-commit hook runs `bun run vet`.
 
-### Types & Validation
-- Use `ArkType` for runtime validation - NO `any` types
-- Use `arkenv` for environment variables
-- Strict TypeScript enabled: noUncheckedIndexedAccess, noImplicitOverride
+## Sample
 
-### Functions & Modules
-- Use factory functions with revealing modules - NO ES6 classes
-- `createUserService(db)` instead of `class UserServiceImpl`
-- Export functions, not classes with static methods
+`src/greet.ts` is a small factory with an ArkType boundary. `src/index.ts` prints `Hello Bun`. `config.ts` reads `NODE_ENV` with arkenv. Replace them with your code and keep `bun run vet` green.
 
-### Strings
-- Template literals only - NO string concatenation with `+`
-- Use `${}` interpolation: `const msg = \`Hello ${name}\``
-- Never: `const msg = "Hello " + name`
+## Code style
 
-### Imports
-- Direct imports only - NO barrel exports
-- Import from source files, not index files
-- Use `import { thing } from './thing'` not `import { thing } from './things'`
+- Use ArkType for runtime values. Do not use `any`.
+- Use arkenv in `config.ts` for environment variables.
+- Use factory functions. Do not use classes for services.
+- Use template literals. Do not build strings with `+`.
+- Import from the source file. Do not add barrel `index.ts` re-exports.
+- Put `*.test.ts` next to the source file. Use `bun:test`.
 
-### Testing
-- Use `bun test` with `import { test, expect } from "bun:test"`
-- Test files named `*.test.ts` in same directory as source
-- Write descriptive test names that explain behavior
+`AGENTS.md` has the same rules for coding agents.
 
-## Configuration
-
-Environment variables are managed through `arkenv` in [`config.ts`](./config.ts):
-```ts
-import { CONFIG, type Config } from './config'
-
-// Access environment
-CONFIG.isDevelopment
-CONFIG.isProduction
-CONFIG.nodeEnv
-```
-
-## Bun APIs
-
-Use Bun's native APIs instead of Node equivalents:
-- `Bun.serve()` for HTTP/WebSockets - don't use `express`
-- `bun:sqlite` for SQLite - don't use `better-sqlite3`
-- `Bun.sql` for Postgres - don't use `pg`
-- `Bun.file()` for file I/O - don't use `node:fs`
-- `Bun.$` for shell commands - don't use `execa`
-- Bun auto-loads `.env` - don't use `dotenv`
-
-## Project Structure
+## Project layout
 
 ```
 .
-├── src/              # Source code
-├── scripts/          # Utility scripts
-├── config.ts         # Environment configuration
-├── tsconfig.json     # TypeScript configuration
-├── biome.json        # Linting and formatting rules
-└── package.json      # Dependencies and scripts
+├── src/                 # Sample source and tests
+├── scripts/             # vet, crap4ts, and coverage threshold
+├── config.ts            # arkenv environment config
+├── tsconfig.json
+├── .github/workflows/   # CI runs bun run vet
+└── package.json
 ```
 
-## Releases
+## Changesets
 
-This project uses Changesets for versioning and releases:
+Changesets is included for apps that publish. A private app can ignore it.
 
 ```bash
-# Add a changeset for your changes
 bun changeset
-
-# Version packages
 bun run version-packages
-
-# Publish release
 bun run release
 ```
 
 ## Stack
 
-- **Runtime**: Bun
-  - https://bun.com/docs
-- **Language**: TypeScript 5+ with strict mode
-  - https://www.typescriptlang.org/docs/handbook/
-  - https://www.totaltypescript.com/ts-reset
-  - https://github.com/microsoft/typescript-go
-- **Validation**: ArkType for runtime type safety
-  - https://arktype.io/docs/intro/your-first-type
-- **Config**: arkenv for type-safe environment variables
-  - https://arkenv.js.org/docs/arkenv
-- **Linting**: Biome for fast linting and formatting
-  - https://biomejs.dev/guides/getting-started/
-- **Testing**: Bun's built-in test runner
-  - https://bun.com/docs/test
-- **Versioning**: Changesets for release management
-  - https://github.com/changesets/changesets
-- **Commit Hooks**: Husky
-  - https://typicode.github.io/husky/how-to.html
+- Bun `1.4.4` for the runtime, test runner, `bun check`, and `bun fmt`
+- oxlint type-aware for lint (`oxlint-tsgolint`)
+- `@graff/rule-validator` `v1.1.3`
+- `stepdown-rule` `v0.4.5`
+- `@graffhyrum/crap4ts` `v2.1.3`
+- ArkType and arkenv
+- Changesets and Husky
