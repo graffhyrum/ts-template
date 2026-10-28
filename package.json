@@ -28,8 +28,7 @@
     "mutate4ts:scan": "bun node_modules/mutate4ts/src/index.ts --scan src/store.ts"
   },
   "dependencies": {
-    "@arkenv/core": "^1.0.0-rc.4",
-    "arkenv": "^1.0.0-rc.3",
+    "arkenv": "^0.8.1",
     "arktype": "^2.2.9"
   },
   "devDependencies": {
