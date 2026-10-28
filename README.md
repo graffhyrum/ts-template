@@ -27,6 +27,8 @@ Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 | mutate4ts      | mutation testing on `src/store.ts`            |
 | test           | `bun test` with the sample coverage threshold |
 
+The audit step asks the npm advisory registry for known problems, so `vet` (and the pre-commit hook) needs network access. A new advisory against any dependency, even a transitive one that your change did not touch, makes `vet` fail until you update that dependency (for example with `bun update`) and commit the new lockfile.
+
 `bun run fmt` writes format fixes. `bun run lint:fix` writes lint fixes.
 
 GitHub Actions runs `bun install --frozen-lockfile` and `bun run vet` on pull requests and on `main`.
