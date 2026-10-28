@@ -17,7 +17,7 @@
         "mutate4ts": "github:graffhyrum/mutate4ts#main",
         "oxlint": "^1.90.0",
         "oxlint-tsgolint": "^7.0.2005",
-        "rule-validator": "github:graffhyrum/rule-validator#v1.1.3",
+        "rule-validator": "github:graffhyrum/rule-validator#v1.2.0",
         "stepdown-rule": "github:graffhyrum/stepdown-rule#v0.4.5",
       },
     },
@@ -195,7 +195,7 @@
 
     "pure-rand": ["pure-rand@6.1.0", "", {}, "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="],
 
-    "rule-validator": ["@graff/rule-validator@github:graffhyrum/rule-validator#caaf92d", { "dependencies": { "arktype": "^2.2.9", "commander": "^15.0.0", "glob": "^13.0.6", "picocolors": "^1.1.1", "typescript": "npm:@typescript/typescript6@^6.0.2" }, "bin": { "rule-validator": "./src/cli.ts" } }, "graffhyrum-rule-validator-caaf92d", "sha512-BG6GXBu7vRbADNH2HV9RpXp4/efhv6XSA5d1LFMwI2W5PtRApmCPExdc2il0ckeJB0OayVv4aZ+uOjN+IgVH9Q=="],
+    "rule-validator": ["@graff/rule-validator@github:graffhyrum/rule-validator#1c01f03", { "dependencies": { "arktype": "^2.2.9", "commander": "^15.0.0", "glob": "^13.0.6", "picocolors": "^1.1.1", "typescript": "npm:@typescript/typescript6@^6.0.2" }, "bin": { "rule-validator": "./src/cli.ts" } }, "graffhyrum-rule-validator-1c01f03", "sha512-H2NzbMkR2sHi2HnFhkQZpxlkrxzFy4C7CtdhYb9tTlKkKtopLctLnEGtSEFW1dH7f/D3Hi0lBaGU4ghwQUTMOg=="],
 
     "semver": ["semver@7.8.5", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA=="],
 

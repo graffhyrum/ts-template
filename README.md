@@ -18,6 +18,7 @@ Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 | Step           | Command                                       |
 | -------------- | --------------------------------------------- |
 | fmt            | `bun fmt --check`                             |
+| audit          | `bun audit`                                   |
 | typecheck      | `bun check`                                   |
 | lint           | `oxlint --type-aware`                         |
 | rule-validator | `rule-validator`                              |
@@ -25,6 +26,8 @@ Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 | crap4ts        | coverage, then `crap4ts`                      |
 | mutate4ts      | mutation testing on `src/store.ts`            |
 | test           | `bun test` with the sample coverage threshold |
+
+The audit step asks the npm advisory registry for known problems, so `vet` (and the pre-commit hook) needs network access. A new advisory against any dependency, even a transitive one that your change did not touch, makes `vet` fail until you update that dependency (for example with `bun update`) and commit the new lockfile.
 
 `bun run fmt` writes format fixes. `bun run lint:fix` writes lint fixes.
 
@@ -89,7 +92,7 @@ bun run release
 
 - Bun `1.4.4` for the runtime, test runner, `bun check`, and `bun fmt`
 - oxlint type-aware for lint (`oxlint-tsgolint`)
-- `rule-validator` `v1.1.3`
+- `rule-validator` `v1.2.0`
 - `stepdown-rule` `v0.4.5`
 - `crap4ts` `v2.1.3`
 - `mutate4ts` `main`

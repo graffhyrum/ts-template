@@ -9,7 +9,7 @@
 - `bun run typecheck` - Type-check with `bun check`
 - `bun run lint` - Lint with oxlint (type-aware)
 - `bun run fmt` - Format with `bun fmt`
-- `bun run vet` - Quiet quality gate. Order: fmt, typecheck, lint, rule-validator, stepdown, crap4ts, test
+- `bun run vet` - Quiet quality gate. Order: fmt, audit, typecheck, lint, rule-validator, stepdown, crap4ts, test
 
 ## Code Style
 
