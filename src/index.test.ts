@@ -1,17 +1,24 @@
 import { expect, test } from "bun:test";
-import { sampleGreeting } from "./index.ts";
+import { startServer } from "./index.ts";
 
-test("sample greeting is Hello Bun", () => {
-  expect(sampleGreeting()).toBe("Hello Bun");
+test("startServer responds on /api/tenants", async () => {
+  const server = startServer(0);
+  const res = await fetch(`http://localhost:${server.port}/api/tenants`);
+  expect(res.status).toBe(200);
+  expect(await res.json()).toEqual([]);
+  void server.stop(true);
 });
 
-test("the entry point prints the sample greeting", async () => {
+test("the entry point starts the server", async () => {
   const proc = Bun.spawn(["bun", "src/index.ts"], {
     stdout: "pipe",
     stderr: "pipe",
+    env: { ...process.env, PORT: "4317" },
   });
-  const stdout = await new Response(proc.stdout).text();
-  const exitCode = await proc.exited;
-  expect(exitCode).toBe(0);
-  expect(stdout.trim()).toBe("Hello Bun");
+  const reader = proc.stdout.getReader();
+  const { value } = await reader.read();
+  const text = new TextDecoder().decode(value);
+  expect(text).toContain("listening");
+  proc.kill();
+  await proc.exited;
 });

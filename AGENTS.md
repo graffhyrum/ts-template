@@ -10,7 +10,6 @@
 - `bun run lint` - Lint with oxlint (type-aware)
 - `bun run fmt` - Format with `bun fmt`
 - `bun run vet` - Quiet quality gate. Order: fmt, typecheck, lint, rule-validator, stepdown, crap4ts, test
-- Do not add `mutate4ts` in this template. It is a later add-on.
 
 ## Code Style
 

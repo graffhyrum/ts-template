@@ -11,8 +11,6 @@ bun run vet
 
 Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 
-`mutate4ts` is a later add-on. This template does not install it.
-
 ## Quality gate
 
 `bun run vet` runs the steps below in order. It prints nothing when they pass. It prints the failing step only.
@@ -22,9 +20,10 @@ Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 | fmt            | `bun fmt --check`                             |
 | typecheck      | `bun check`                                   |
 | lint           | `oxlint --type-aware`                         |
-| rule-validator | `@graff/rule-validator`                       |
+| rule-validator | `rule-validator`                              |
 | stepdown       | `stepdown-rule`                               |
-| crap4ts        | coverage, then `@graffhyrum/crap4ts`          |
+| crap4ts        | coverage, then `crap4ts`                      |
+| mutate4ts      | mutation testing on `src/store.ts`            |
 | test           | `bun test` with the sample coverage threshold |
 
 `bun run fmt` writes format fixes. `bun run lint:fix` writes lint fixes.
@@ -51,7 +50,7 @@ The Husky pre-commit hook runs `bun run vet`.
 
 ## Sample
 
-`src/greet.ts` is a small factory with an ArkType boundary. `src/index.ts` prints `Hello Bun`. `config.ts` reads `NODE_ENV` with arkenv. Replace them with your code and keep `bun run vet` green.
+`src/` is a small multi-tenant web todo app (Bun + vanilla TS). `src/index.ts` serves it. `config.ts` reads `NODE_ENV` and `PORT` with arkenv. Replace with your code and keep `bun run vet` green.
 
 ## Code style
 
@@ -90,8 +89,9 @@ bun run release
 
 - Bun `1.4.4` for the runtime, test runner, `bun check`, and `bun fmt`
 - oxlint type-aware for lint (`oxlint-tsgolint`)
-- `@graff/rule-validator` `v1.1.3`
+- `rule-validator` `v1.1.3`
 - `stepdown-rule` `v0.4.5`
-- `@graffhyrum/crap4ts` `v2.1.3`
+- `crap4ts` `v2.1.3`
+- `mutate4ts` `main`
 - ArkType and arkenv
 - Changesets and Husky
