@@ -18,6 +18,7 @@ Use [Bun](https://bun.sh) `1.4.4`. `packageManager` is `bun@1.4.4`.
 | Step           | Command                                       |
 | -------------- | --------------------------------------------- |
 | fmt            | `bun fmt --check`                             |
+| audit          | `bun audit`                                   |
 | typecheck      | `bun check`                                   |
 | lint           | `oxlint --type-aware`                         |
 | rule-validator | `rule-validator`                              |
@@ -89,7 +90,7 @@ bun run release
 
 - Bun `1.4.4` for the runtime, test runner, `bun check`, and `bun fmt`
 - oxlint type-aware for lint (`oxlint-tsgolint`)
-- `rule-validator` `v1.1.3`
+- `rule-validator` `v1.2.0`
 - `stepdown-rule` `v0.4.5`
 - `crap4ts` `v2.1.3`
 - `mutate4ts` `main`

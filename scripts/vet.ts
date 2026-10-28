@@ -7,6 +7,7 @@ type Step = {
 
 const steps: readonly Step[] = [
   { label: "fmt", argv: ["bun", "run", "fmt:check"] },
+  { label: "audit", argv: ["bun", "audit"] },
   { label: "typecheck", argv: ["bun", "run", "typecheck"] },
   { label: "lint", argv: ["bun", "run", "lint"] },
   { label: "rule-validator", argv: ["bun", "run", "rule-validator"] },
