@@ -54,34 +54,40 @@ function wireEvents(): void {
 
 async function addTenant(): Promise<void> {
   const name = newTenantInput?.value ?? "";
-  await fetch("/api/tenants", {
+  const response = await fetch("/api/tenants", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ name }),
   });
+  if (!response.ok) return;
+  const tenant = (await response.json()) as { id: string };
   if (newTenantInput !== null) newTenantInput.value = "";
+  currentTenantId = tenant.id;
   await loadTenants();
+  if (tenantSelect !== null && currentTenantId !== undefined) {
+    tenantSelect.value = currentTenantId;
+  }
 }
 
 async function addTodo(): Promise<void> {
   const title = newTodoInput?.value ?? "";
   if (currentTenantId === undefined) return;
-  await fetch("/api/todos", {
+  const response = await fetch("/api/todos", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ tenantId: currentTenantId, title }),
   });
+  if (!response.ok) return;
   if (newTodoInput !== null) newTodoInput.value = "";
   await loadTodos();
 }
 
 async function toggleTodo(id: string): Promise<void> {
   if (currentTenantId === undefined) return;
-  await fetch(`/api/todos/${encodeURIComponent(id)}`, {
-    method: "PATCH",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ tenantId: currentTenantId }),
-  });
+  await fetch(
+    `/api/todos/${encodeURIComponent(id)}?tenantId=${encodeURIComponent(currentTenantId)}`,
+    { method: "PATCH" },
+  );
   await loadTodos();
 }
 
@@ -98,7 +104,10 @@ async function deleteTodo(id: string): Promise<void> {
 
 async function loadTenants(): Promise<void> {
   const response = await fetch("/api/tenants");
-  const tenants = (await response.json()) as Tenant[];
+  if (!response.ok) return;
+  const parsed: unknown = await response.json();
+  if (!Array.isArray(parsed)) return;
+  const tenants = parsed as Tenant[];
   if (tenantSelect !== null) {
     tenantSelect.innerHTML = renderTenantOptions(tenants);
   }
@@ -116,7 +125,10 @@ async function loadTodos(): Promise<void> {
   const response = await fetch(
     `/api/todos?tenantId=${encodeURIComponent(currentTenantId)}`,
   );
-  const todos = (await response.json()) as Todo[];
+  if (!response.ok) return;
+  const parsed: unknown = await response.json();
+  if (!Array.isArray(parsed)) return;
+  const todos = parsed as Todo[];
   if (todosContainer !== null) {
     todosContainer.innerHTML = renderTodos(todos);
   }

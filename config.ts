@@ -3,7 +3,7 @@
 // ⚠️ arkenv provides type-safe environment variable parsing with validation
 import arkenv from "arkenv";
 
-export const env = arkenv({
+const env = arkenv({
   NODE_ENV: "'development' | 'production' | 'test' = 'development'",
   PORT: "number = 3000",
 });

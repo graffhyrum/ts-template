@@ -75,9 +75,11 @@ test("full todo flow is tenant scoped", async () => {
   const list = (await listRes.json()) as unknown[];
   expect(list).toHaveLength(1);
 
-  const toggleRes = await call(h, "PATCH", `/api/todos/${todo.id}`, {
-    tenantId: tenant.id,
-  });
+  const toggleRes = await call(
+    h,
+    "PATCH",
+    `/api/todos/${todo.id}?tenantId=${tenant.id}`,
+  );
   expect(toggleRes.status).toBe(200);
   const toggled = (await toggleRes.json()) as { done: boolean };
   expect(toggled.done).toBe(true);
@@ -161,9 +163,11 @@ test("cross-tenant todo access is denied", async () => {
   const list = (await listRes.json()) as unknown[];
   expect(list).toHaveLength(0);
 
-  const toggleRes = await call(h, "PATCH", `/api/todos/${todo.id}`, {
-    tenantId: t2.id,
-  });
+  const toggleRes = await call(
+    h,
+    "PATCH",
+    `/api/todos/${todo.id}?tenantId=${t2.id}`,
+  );
   expect(toggleRes.status).toBe(404);
 
   const delRes = await call(

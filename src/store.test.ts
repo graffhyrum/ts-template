@@ -64,27 +64,29 @@ test("toggles a todo done state", () => {
   const store = createStore();
   const tenant = store.createTenant("Acme")!;
   const todo = store.createTodo(tenant.id, "Task")!;
-  const toggled = store.toggleTodo(todo.id);
+  const toggled = store.toggleTodo(todo.id, tenant.id);
   expect(toggled?.done).toBe(true);
-  expect(store.toggleTodo(todo.id)?.done).toBe(false);
+  expect(store.toggleTodo(todo.id, tenant.id)?.done).toBe(false);
 });
 
 test("toggle returns undefined for unknown todo", () => {
   const store = createStore();
-  expect(store.toggleTodo("nope" as TodoId)).toBeUndefined();
+  const tenant = store.createTenant("Acme")!;
+  expect(store.toggleTodo("nope" as TodoId, tenant.id)).toBeUndefined();
 });
 
 test("deletes a todo", () => {
   const store = createStore();
   const tenant = store.createTenant("Acme")!;
   const todo = store.createTodo(tenant.id, "Task")!;
-  expect(store.deleteTodo(todo.id)).toBe(true);
+  expect(store.deleteTodo(todo.id, tenant.id)).toBe(true);
   expect(store.getTodo(todo.id)).toBeUndefined();
 });
 
 test("delete returns false for unknown todo", () => {
   const store = createStore();
-  expect(store.deleteTodo("nope" as TodoId)).toBe(false);
+  const tenant = store.createTenant("Acme")!;
+  expect(store.deleteTodo("nope" as TodoId, tenant.id)).toBe(false);
 });
 
 test("todoBelongsToTenant checks ownership", () => {

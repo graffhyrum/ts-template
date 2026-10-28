@@ -2,17 +2,15 @@ import { expect, test } from "bun:test";
 import { CONFIG } from "./config.ts";
 
 test("config follows NODE_ENV", () => {
-  const nodeEnv = readNodeEnv(process.env.NODE_ENV);
-  expect(CONFIG.nodeEnv).toBe(nodeEnv);
-  expect(CONFIG.isDevelopment).toBe(nodeEnv === "development");
-  expect(CONFIG.isProduction).toBe(nodeEnv === "production");
-  expect(CONFIG.isTest).toBe(nodeEnv === "test");
+  const nodeEnv = process.env.NODE_ENV;
+  const expected =
+    nodeEnv === "production"
+      ? "production"
+      : nodeEnv === "test"
+        ? "test"
+        : "development";
+  expect(CONFIG.nodeEnv).toBe(expected);
+  expect(CONFIG.isDevelopment).toBe(expected === "development");
+  expect(CONFIG.isProduction).toBe(expected === "production");
+  expect(CONFIG.isTest).toBe(expected === "test");
 });
-
-function readNodeEnv(
-  value: string | undefined,
-): "development" | "production" | "test" {
-  if (value === "production") return "production";
-  if (value === "test") return "test";
-  return "development";
-}

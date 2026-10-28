@@ -41,7 +41,7 @@ async function handleRequest(
   const todoMatch = path.match(/^\/api\/todos\/([^/]+)$/);
   if (todoMatch !== null) {
     const id = parseTodoId(todoMatch[1]) as TodoId;
-    if (method === "PATCH") return handleToggleTodo(store, id, request);
+    if (method === "PATCH") return handleToggleTodo(store, id, url);
     if (method === "DELETE") return handleDeleteTodo(store, id, url);
   }
   return jsonResponse(404, { error: "not found" });
@@ -93,16 +93,15 @@ async function handleCreateTodo(
 async function handleToggleTodo(
   store: Store,
   id: TodoId,
-  request: Request,
+  url: URL,
 ): Promise<Response> {
-  const body = await readJson(request);
-  const tenantId = parseTenantId(body?.tenantId);
+  const tenantId = parseTenantId(url.searchParams.get("tenantId"));
   if (tenantId === undefined)
     return jsonResponse(400, { error: "invalid tenant id" });
   if (!store.todoBelongsToTenant(id, tenantId)) {
     return jsonResponse(404, { error: "todo not found" });
   }
-  const todo = store.toggleTodo(id);
+  const todo = store.toggleTodo(id, tenantId);
   if (todo === undefined) return jsonResponse(404, { error: "todo not found" });
   return jsonResponse(200, todo);
 }
@@ -118,7 +117,7 @@ async function handleDeleteTodo(
   if (!store.todoBelongsToTenant(id, tenantId)) {
     return jsonResponse(404, { error: "todo not found" });
   }
-  const deleted = store.deleteTodo(id);
+  const deleted = store.deleteTodo(id, tenantId);
   if (!deleted) return jsonResponse(404, { error: "todo not found" });
   return new Response(null, { status: 204 });
 }
