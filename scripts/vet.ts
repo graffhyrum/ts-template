@@ -12,6 +12,7 @@ const steps: readonly Step[] = [
   { label: "rule-validator", argv: ["bun", "run", "rule-validator"] },
   { label: "stepdown", argv: ["bun", "run", "stepdown"] },
   { label: "crap4ts", argv: ["bun", "run", "crap4ts"] },
+  { label: "mutate4ts", argv: ["bun", "run", "mutate4ts"] },
   { label: "test", argv: ["bun", "run", "test:coverage"] },
 ];
 

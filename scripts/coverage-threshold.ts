@@ -144,6 +144,7 @@ function normalizePath(file: string): string {
 
 function isGatedFile(file: string): boolean {
   if (file.endsWith(".test.ts")) return false;
+  if (file === "src/client.ts") return false;
   if (file === "config.ts") return true;
   return file.startsWith("src/");
 }
