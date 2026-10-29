@@ -95,6 +95,6 @@ bun run release
 - `rule-validator` `v1.2.0`
 - `stepdown-rule` `v0.4.5`
 - `crap4ts` `v2.1.3`
-- `mutate4ts` `main`
+- `mutate4ts` `v1.0.0`
 - ArkType and arkenv
 - Changesets and Husky
