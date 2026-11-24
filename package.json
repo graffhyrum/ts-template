@@ -37,8 +37,8 @@
     "@types/bun": "^1.4.5",
     "oxlint": "^1.95.0",
     "@graffhyrum/crap4ts": "https://github.com/graffhyrum/ts-quality/releases/download/crap4ts-v2.1.4/graffhyrum-crap4ts-2.1.4.tgz",
-    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v1.0.1/mutate4ts-1.0.1.tgz",
-    "@graff/rule-validator": "https://github.com/graffhyrum/ts-quality/releases/download/rule-validator-v1.2.1/graff-rule-validator-1.2.1.tgz",
-    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.4.7/stepdown-analyzer-0.4.7.tgz"
+    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v2.0.0/mutate4ts-2.0.0.tgz",
+    "@graff/rule-validator": "https://github.com/graffhyrum/ts-quality/releases/download/rule-validator-v1.3.0/graff-rule-validator-1.3.0.tgz",
+    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.5.0/stepdown-analyzer-0.5.0.tgz"
   }
 }
