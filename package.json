@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "ts-template",
   "version": "0.3.0",
   "description": "Personal TypeScript project template with a quiet quality gate.",
