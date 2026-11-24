@@ -45,7 +45,7 @@
 
 ### Configuration
 
-- Use `arkenv` from [`config.ts`](./config.ts) for environment variables - NEVER remove arkenv
+- Use `@arkenv/core` from [`config.ts`](./config.ts) for environment variables - NEVER remove arkenv
 - Import: `import { CONFIG, type Config } from './config'`
 - Access env: `CONFIG.isDevelopment`, `CONFIG.isProduction`, `CONFIG.nodeEnv`
 - All env vars must be validated through arkenv
@@ -72,3 +72,17 @@ Bun.serve({ routes: { "/": index } });
 ```
 
 HTML can import `.tsx`/`.css` directly. Run with `bun --hot ./index.ts`
+
+## Agent skills
+
+### Issue tracker
+
+Issues live in this repo's GitHub Issues (uses the `gh` CLI). See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five canonical labels (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Multi-context layout (root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files). See `docs/agents/domain.md`.
