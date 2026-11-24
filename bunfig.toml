@@ -1,4 +1,6 @@
 [test]
+coverage = true
+coverageThreshold = 1.0 # repo requires 100% per-file (see scripts/coverage-threshold.ts)
 coverageSkipTestFiles = true
 coveragePathIgnorePatterns = [
   "**/*.test.ts",
@@ -8,3 +10,7 @@ coveragePathIgnorePatterns = [
   "node_modules/**",
   "dist/**",
 ]
+
+[fmt]
+# printWidth = 100
+# semi = false

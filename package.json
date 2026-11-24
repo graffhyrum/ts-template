@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "ts-template",
   "version": "0.3.0",
   "description": "Personal TypeScript project template with a quiet quality gate.",
@@ -15,8 +16,8 @@
     "typecheck": "bun check",
     "fmt": "bun fmt --no-script",
     "fmt:check": "bun fmt --no-script --check",
-    "lint": "oxlint --type-aware",
-    "lint:fix": "oxlint --fix --type-aware",
+    "lint": "bun lint",
+    "lint:fix": "bun lint --fix",
     "rule-validator": "rule-validator",
     "stepdown": "stepdown-rule \"src/**/*.ts\" \"scripts/**/*.ts\" \"config.ts\"",
     "crap4ts": "bun scripts/crap-gate.ts",
@@ -24,21 +25,23 @@
     "version-packages": "changeset version",
     "release": "changeset publish",
     "mutate4ts": "mutate4ts src/store.ts",
-    "mutate4ts:scan": "mutate4ts --scan src/store.ts"
+    "mutate4ts:scan": "mutate4ts --scan src/store.ts",
+    "prepare": "husky",
+    "format": "bun fmt",
+    "format:check": "bun fmt --check"
   },
   "dependencies": {
-    "arkenv": "^0.8.1",
-    "arktype": "^2.2.9"
+    "arktype": "^2.2.10",
+    "@arkenv/core": "^1.0.0-rc.4"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
-    "@total-typescript/ts-reset": "^0.6.1",
-    "@types/bun": "^1.4.4",
-    "oxlint": "^1.90.0",
-    "oxlint-tsgolint": "^7.0.2005",
-    "@graffhyrum/crap4ts": "https://github.com/graffhyrum/ts-quality/releases/download/crap4ts-v2.1.4/graffhyrum-crap4ts-2.1.4.tgz",
-    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v1.0.1/mutate4ts-1.0.1.tgz",
     "@graff/rule-validator": "https://github.com/graffhyrum/ts-quality/releases/download/rule-validator-v1.2.1/graff-rule-validator-1.2.1.tgz",
-    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.4.7/stepdown-analyzer-0.4.7.tgz"
+    "@graffhyrum/crap4ts": "https://github.com/graffhyrum/ts-quality/releases/download/crap4ts-v2.1.4/graffhyrum-crap4ts-2.1.4.tgz",
+    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.4.7/stepdown-analyzer-0.4.7.tgz",
+    "@total-typescript/ts-reset": "^0.6.1",
+    "@types/bun": "^1.4.5",
+    "husky": "^9.1.7",
+    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v1.0.1/mutate4ts-1.0.1.tgz"
   }
 }

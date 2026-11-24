@@ -1,0 +1,4 @@
+bun lint --no-script
+bun fmt --check .
+bun check
+bun test
