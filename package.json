@@ -6,7 +6,7 @@
   "module": "src/index.ts",
   "type": "module",
   "private": true,
-  "packageManager": "bun@1.4.4",
+  "packageManager": "bun@1.4.5",
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "build": "bun build src/index.ts --target bun --outdir ./dist",
@@ -16,8 +16,8 @@
     "typecheck": "bun check",
     "fmt": "bun fmt --no-script",
     "fmt:check": "bun fmt --no-script --check",
-    "lint": "bun lint",
-    "lint:fix": "bun lint --fix",
+    "lint": "bun lint --type-aware",
+    "lint:fix": "bun lint --fix --type-aware",
     "rule-validator": "rule-validator",
     "stepdown": "stepdown-rule \"src/**/*.ts\" \"scripts/**/*.ts\" \"config.ts\"",
     "crap4ts": "bun scripts/crap-gate.ts",
@@ -25,10 +25,7 @@
     "version-packages": "changeset version",
     "release": "changeset publish",
     "mutate4ts": "mutate4ts src/store.ts",
-    "mutate4ts:scan": "mutate4ts --scan src/store.ts",
-    "prepare": "husky",
-    "format": "bun fmt",
-    "format:check": "bun fmt --check"
+    "mutate4ts:scan": "mutate4ts --scan src/store.ts"
   },
   "dependencies": {
     "arktype": "^2.2.10",
@@ -36,12 +33,12 @@
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
-    "@graff/rule-validator": "https://github.com/graffhyrum/ts-quality/releases/download/rule-validator-v1.2.1/graff-rule-validator-1.2.1.tgz",
-    "@graffhyrum/crap4ts": "https://github.com/graffhyrum/ts-quality/releases/download/crap4ts-v2.1.4/graffhyrum-crap4ts-2.1.4.tgz",
-    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.4.7/stepdown-analyzer-0.4.7.tgz",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/bun": "^1.4.5",
-    "husky": "^9.1.7",
-    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v1.0.1/mutate4ts-1.0.1.tgz"
+    "oxlint": "^1.95.0",
+    "@graffhyrum/crap4ts": "https://github.com/graffhyrum/ts-quality/releases/download/crap4ts-v2.1.4/graffhyrum-crap4ts-2.1.4.tgz",
+    "mutate4ts": "https://github.com/graffhyrum/ts-quality/releases/download/mutate4ts-v2.0.0/mutate4ts-2.0.0.tgz",
+    "@graff/rule-validator": "https://github.com/graffhyrum/ts-quality/releases/download/rule-validator-v1.3.0/graff-rule-validator-1.3.0.tgz",
+    "@stepdown/analyzer": "https://github.com/graffhyrum/ts-quality/releases/download/stepdown-rule-v0.5.0/stepdown-analyzer-0.5.0.tgz"
   }
 }
